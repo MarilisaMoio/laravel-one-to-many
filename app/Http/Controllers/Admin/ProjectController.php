@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Project;
+use App\Models\Type;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Str;
@@ -31,7 +32,9 @@ class ProjectController extends Controller
      */
     public function create()
     {
-        return view('admin.projects.create');
+        $types = Type::all();
+
+        return view('admin.projects.create', compact('types'));
     }
 
     /**
@@ -76,7 +79,9 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return view('admin.projects.edit', compact('project'));
+        $types = Type::all();
+
+        return view('admin.projects.edit', compact('project', 'types'));
     }
 
     /**
@@ -105,6 +110,7 @@ class ProjectController extends Controller
 
 
         $formData['slug'] = Str::slug($formData['name'], '-');
+
 
         $project->fill($formData);
         $project->save();
@@ -137,7 +143,8 @@ class ProjectController extends Controller
             ],
             'client_name' => 'nullable|min:5|max:600',
             'summary' => 'nullable|min:10|max:2000',
-            'img' => 'nullable|image|max:512'
+            'img' => 'nullable|image|max:512',
+            'type_id' => 'nullable|exists:types,id'
         ];
 
         if ($project) {
@@ -154,7 +161,8 @@ class ProjectController extends Controller
                 'file' => 'Il campo ":attribute" non deve superare i :max kilobyte'
             ],
             'unique' => 'Il valore inserito nel campo ":attribute" è già presente nel nostro sistema.',
-            'image' => 'Il campo ":attribute" può contenere solo file di immagini.'
+            'image' => 'Il campo ":attribute" può contenere solo file di immagini.',
+            'exists' => 'Il campo ":attribute" non è valido'
         ];
 
         $validator = Validator::make($input, $rules, $messages)->validate();

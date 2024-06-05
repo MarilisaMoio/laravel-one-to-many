@@ -183,7 +183,8 @@ return [
         'name' => 'Nome',
         'summary' => 'Sommario',
         'client_name' => 'Commissionato da',
-        'img' => 'Immagine'
+        'img' => 'Immagine',
+        'type_id' => 'Tipologia'
     ],
 
 ];

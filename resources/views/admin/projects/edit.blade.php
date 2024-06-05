@@ -29,6 +29,15 @@
                     <input type="text" class="form-control" id="client_name" name="client_name" value="{{ $project->client_name, old('client_name') }}">
                 </div>
                 <div class="mb-3">
+                    <label for="type_id" class="form-label">Tipologia</label>
+                    <select class="form-select" id="type_id" name="type_id">
+                        <option @selected($project->type_id == old('type_id', "")) value="">Nessuna tipologia selezionata</option>
+                        @foreach($types as $type)
+                        <option value="{{ $type->id }}" @selected($type->id == old('type_id', $project->type_id)) >{{ $type->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="mb-3">
                     <label for="img" class="form-label">Immagine</label>
                     <input class="form-control mb-2" type="file" id="img" name="img">
                     @if($project->img)

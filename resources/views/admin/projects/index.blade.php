@@ -17,6 +17,7 @@
                                 <th scope="col">Slug</th>
                                 <th scope="col">Commissioned by</th>
                                 <th scope="col">IMG</th>
+                                <th scope="col">Type</th>
                                 <th scope="col">Actions</th>
                             </tr>
                         </thead>
@@ -27,6 +28,7 @@
                                     <td>/{{ $project->slug }}</td>
                                     <td>{{ $project->client_name }}</td>
                                     <td>{{ $project->img ? 'YES' : 'NO' }}</td>
+                                    <td>{{ $project->type_id ? $project->type->name : '---' }}</td>
                                     <td>
                                         <a class="btn btn-success" href="{{ route('admin.projects.show', $project->id) }}">See</a>
                                         <a class="btn btn-warning" href="{{ route('admin.projects.edit', $project->id) }}">Edit</a>
